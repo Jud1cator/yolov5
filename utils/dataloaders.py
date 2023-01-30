@@ -304,8 +304,13 @@ class LoadImages:
         else:
             # Read image
             self.count += 1
-            im0 = cv2.imread(path)  # BGR
-            assert im0 is not None, f'Image Not Found {path}'
+            try:
+                im0 = cv2.imread(path)  # BGR
+                assert im0 is not None, f'Image Not Found {path}'
+            except:
+                print(f'Image Broken or not found {path}')
+                return self.__next__()
+            
             s = f'image {self.count}/{self.nf} {path}: '
 
         if self.transforms:
